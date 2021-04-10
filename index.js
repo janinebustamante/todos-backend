@@ -16,6 +16,8 @@ mongoose.connect(process.env.MONGO_URI, {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
+app.get('/healthcheck', (req, res) => res.send('OK'));
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`API is now online on port ${port}`);
