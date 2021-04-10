@@ -8,7 +8,13 @@ router.post('/', auth.verify, async (req, res) => {
     const token = req.headers.authorization;
     const payload = auth.decode(token);
     const userId = payload.id;
-    res.send(`Hello ${text}, userid = ${userId}`)
+
+    try {
+        const todo = await TodoController.createTodo(userId, text)
+        res.json(todo);
+    } catch (err) {
+        res.status(500).json({ err: err.message });
+    }
 })
 
 
