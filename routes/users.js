@@ -3,15 +3,11 @@ const router = express.Router();
 const UserController = require('../controllers/UserController');
 
 router.post('/register', async (req, res) => {
-    //username and password
-    const username = req.body.username;
-    const password = req.body.password;
+    const { username, password } = req.body;
 
-    //make UserController - pass username and password to controller function
-    // res.send(`Username is ${username}, password is ${password}`);
     try {
-        const message = await UserController.createUser(username, password);
-        res.send(message);
+        const user = await UserController.createUser(username, password);
+        res.json(user);
     } catch (err) {
         res.status(500).json({ err: err.message });
     }
