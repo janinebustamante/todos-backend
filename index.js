@@ -5,6 +5,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const userRoutes = require('./routes/users');
+const todoRoutes = require('./routes/todos');
 
 app.use(cors());
 
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true}));
 app.get('/healthcheck', (req, res) => res.send('OK'));
 
 app.use('/api/users', userRoutes);
+app.use('/api/todos', todoRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
