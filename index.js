@@ -4,6 +4,8 @@ const mongoose = require('mongoose'); //connects mongodb
 const cors = require('cors');
 require('dotenv').config();
 
+const userRoutes = require('./routes/users');
+
 app.use(cors());
 
 mongoose.connection.once('open', () => console.log('Connected to MongoDB Atlas'));
@@ -17,6 +19,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
 app.get('/healthcheck', (req, res) => res.send('OK'));
+
+app.use('/api/users', userRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
