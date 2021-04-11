@@ -37,11 +37,11 @@ module.exports.editTodo = async (userId, todoId, params) => {
     const todo = await Todo.findOne({ _id: todoId });
 
     if (!todo) {
-        throw new Error('No existing todo.')
+        throw new Error('Todo not found.')
     }
 
     if (userId !== todo.userId){
-        throw new Error('No todo found.')
+        throw new Error('Todo not found.')
     }
 
     if (params.text) {
@@ -57,3 +57,16 @@ module.exports.editTodo = async (userId, todoId, params) => {
 }
 
 
+module.exports.deleteTodo = async (userId, todoId) => {
+    const todo = await Todo.findOne({ _id: todoId })
+
+    if (!todo) {
+        throw new Error('Todo not found.')
+    }
+
+    if (todo.userId !== userId) {
+        throw new Error('Todo not found.')
+    }
+
+    await todo.delete();
+}

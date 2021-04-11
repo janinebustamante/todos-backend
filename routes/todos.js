@@ -48,5 +48,19 @@ router.put('/:todoId', auth.verify, async (req, res) => {
 })
 
 
+router.delete('/:todoId', auth.verify, async (req, res) => {
+    const todoId = req.params.todoId;
+
+    const token = req.headers.authorization;
+    const payload = auth.decode(token);
+    const userId = payload.id;
+
+    try {
+        await TodoController.deleteTodo(userId, todoId)
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ err: err.message })
+    }
+})
 
 module.exports = router;
